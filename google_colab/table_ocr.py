@@ -25,7 +25,7 @@ def output_to_csv (finalboxes, img):
                     y, x, w, h = finalboxes[i][j][k][0], finalboxes[i][j][k][1], finalboxes[i][j][k][2], \
                                 finalboxes[i][j][k][3]
 
-                    finalimg = img[x:x + h, y:y + w]
+                    finalimg = img[x-5:x + h+5, y-5:y + w+5]
 
                     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 1))
                     border = cv2.copyMakeBorder(finalimg, 2, 2, 2, 2, cv2.BORDER_CONSTANT, value=[255, 255])
@@ -51,7 +51,8 @@ def output_to_csv (finalboxes, img):
     arr = np.array(outer)
     dataframe = pd.DataFrame(arr.reshape(len(finalboxes), len(finalboxes[0])))
     print(dataframe)
-    data = dataframe.style.set_properties(align="left")
-    # Converting dataframe into an excel-file
-    data.to_excel("output.xlsx")
+    return dataframe
+    # data = dataframe.style.set_properties(align="left")
+    # # Converting dataframe into an excel-file
+    # data.to_excel("output.xlsx")
         
